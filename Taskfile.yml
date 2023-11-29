@@ -1,0 +1,45 @@
+version: '3'
+
+dotenv:
+  - .env.local
+
+tasks:
+  default:
+    desc: Get an Advent of Code puzzle initialized, input downloaded, and ready to solve.
+    deps:
+      - init
+      - puzzle
+      - input
+  init:
+    desc: Initialize a new Advent of Code puzzle for the given day and year.
+    cmds:
+      - go run cmd/init/main.go {{if ne .DAY ""}}-day {{.DAY}}{{end}} {{if ne .YEAR ""}}-year {{.YEAR}}{{end}}
+    silent: true
+    vars:
+      DAY: '{{.DAY | default ""}}'
+      YEAR: '{{.YEAR | default ""}}'
+  puzzle:
+    desc: Get the puzzle description for the given day and year.
+    cmds:
+      - go run cmd/puzzle/main.go {{if ne .DAY ""}}-day {{.DAY}}{{end}} {{if ne .YEAR ""}}-year {{.YEAR}}{{end}}
+    silent: true
+    vars:
+      DAY: '{{.DAY | default ""}}'
+      YEAR: '{{.YEAR | default ""}}'
+  input:
+    desc: Download the puzzle input for the given day and year.
+    cmds:
+      - go run cmd/input/main.go {{if ne .DAY ""}}-day {{.DAY}}{{end}} {{if ne .YEAR ""}}-year {{.YEAR}}{{end}}
+    silent: true
+    vars:
+      DAY: '{{.DAY | default ""}}'
+      YEAR: '{{.YEAR | default ""}}'
+  submit:
+    desc: Submit the solution for the given day and year and puzzle level.
+    cmds:
+      - go run cmd/submit/main.go {{if ne .DAY ""}}-day {{.DAY}}{{end}} {{if ne .YEAR ""}}-year {{.YEAR}}{{end}} -puzzle {{.PUZZLE}}
+    silent: true
+    vars:
+      DAY: '{{.DAY | default ""}}'
+      YEAR: '{{.YEAR | default ""}}'
+      PUZZLE: '{{.PUZZLE | default "1"}}'

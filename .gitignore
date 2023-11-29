@@ -19,3 +19,15 @@
 
 # Go workspace file
 go.work
+
+# JetBrains files
+.idea/
+
+# local files
+*.local
+
+# Advent files
+input.txt
+puzzle.md
+solution-*.txt
+reply-*.md
