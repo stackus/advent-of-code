@@ -40,7 +40,7 @@ func main() {
 	}
 
 	replyPath := filepath.Join(puzzlePath, fmt.Sprintf("reply-%d.md", *puzzle))
-	err = WriteFile(replyPath, reply)
+	err = WriteFile(replyPath, reply, true)
 	if err != nil {
 		log.Fatalf("Error writing reply: %v", err)
 	}

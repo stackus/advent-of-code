@@ -58,9 +58,9 @@ func MakeDir(day, year int) string {
 	return puzzlePath
 }
 
-func WriteFile(filename string, contents []byte) error {
-	// ensure the file doesn't already exist
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
+func WriteFile(filename string, contents []byte, allowOverwrite bool) error {
+	// ensure the file doesn't already exist OR allowOverwrite is true
+	if _, err := os.Stat(filename); os.IsNotExist(err) || allowOverwrite {
 		// make the directory if it doesn't exist
 		err := os.MkdirAll(filepath.Dir(filename), 0755)
 		if err != nil {

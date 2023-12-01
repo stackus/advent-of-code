@@ -23,7 +23,7 @@ func main() {
 
 	// write the puzzle description to a file
 	puzzlePath := fmt.Sprintf("%s%spuzzle.md", adventOfCodePath, string(os.PathSeparator))
-	err = WriteFile(puzzlePath, puzzle)
+	err = WriteFile(puzzlePath, puzzle, true)
 	if err != nil {
 		log.Fatalf("Error writing puzzle: %v", err)
 	}

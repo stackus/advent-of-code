@@ -64,7 +64,7 @@ func main() {
 	}
 
 	solutionPath := filepath.Join(GetPuzzlePath({{.Day}}, {{.Year}}), fmt.Sprintf("solution-%d.txt", puzzle))
-	err := WriteFile(solutionPath, []byte(fmt.Sprintf("%d", solution)))
+	err := WriteFile(solutionPath, []byte(fmt.Sprintf("%d", solution)), true)
 	if err != nil {
 		log.Fatalf("Error writing solution: %v", err)
 	}

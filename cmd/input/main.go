@@ -17,7 +17,7 @@ func main() {
 
 	// write the puzzle input to a file
 	inputPath := fmt.Sprintf("%s%sinput.txt", adventOfCodePath, string(os.PathSeparator))
-	err := WriteFile(inputPath, []byte(input))
+	err := WriteFile(inputPath, []byte(input), true)
 	if err != nil {
 		log.Fatalf("Error writing puzzle input: %v", err)
 	}

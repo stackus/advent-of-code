@@ -42,7 +42,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error executing template: %v", err)
 		}
-		err = WriteFile(filePath, buf.Bytes())
+		err = WriteFile(filePath, buf.Bytes(), false)
 		if err != nil {
 			log.Fatalf("Error writing file: %v", err)
 		}
