@@ -17,7 +17,7 @@ var input string
 
 // puzzle1 solves the level 1 puzzle
 func puzzle1(input string) int {
-	coords := parseInput(input)
+	coords := parseInput(input, false)
 	// sum all coords
 	total := 0
 	for _, coord := range coords {
@@ -29,7 +29,7 @@ func puzzle1(input string) int {
 
 // puzzle2 solves the level 2 puzzle
 func puzzle2(input string) int {
-	coords := parseInput(input)
+	coords := parseInput(input, true)
 	// sum all coords
 	total := 0
 	for _, coord := range coords {
@@ -41,94 +41,36 @@ func puzzle2(input string) int {
 
 // parseInput converts the input string into whatever format is needed for the puzzle
 // update the return type as needed
-func parseInput(input string) (coords []int) {
-	getDigit := func(rs []rune) rune {
-		num := []rune{}
-		for _, r := range rs {
-			if r >= 'a' && r <= 'z' {
-				num = append(num, r)
-				switch {
-				case strings.HasSuffix(string(num), "one"):
-					return '1'
-				case strings.HasSuffix(string(num), "two"):
-					return '2'
-				case strings.HasSuffix(string(num), "three"):
-					return '3'
-				case strings.HasSuffix(string(num), "four"):
-					return '4'
-				case strings.HasSuffix(string(num), "five"):
-					return '5'
-				case strings.HasSuffix(string(num), "six"):
-					return '6'
-				case strings.HasSuffix(string(num), "seven"):
-					return '7'
-				case strings.HasSuffix(string(num), "eight"):
-					return '8'
-				case strings.HasSuffix(string(num), "nine"):
-					return '9'
-				}
-				continue
-			}
-			if r < '0' || r > '9' {
-				// reset num
-				num = []rune{}
-				continue
-			}
-			return r
-		}
-		panic("no digit found")
+func parseInput(input string, matchNames bool) (coords []int) {
+	names := []string{
+		"one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 	}
-
-	getDigitReversed := func(rs []rune) rune {
-		num := []rune{}
-		for idx := len(rs) - 1; idx >= 0; idx-- {
-			r := rs[idx]
-			if r >= 'a' && r <= 'z' {
-				num = append(num, r)
-				switch {
-				case strings.HasSuffix(string(num), "eno"):
-					return '1'
-				case strings.HasSuffix(string(num), "owt"):
-					return '2'
-				case strings.HasSuffix(string(num), "eerht"):
-					return '3'
-				case strings.HasSuffix(string(num), "ruof"):
-					return '4'
-				case strings.HasSuffix(string(num), "evif"):
-					return '5'
-				case strings.HasSuffix(string(num), "xis"):
-					return '6'
-				case strings.HasSuffix(string(num), "neves"):
-					return '7'
-				case strings.HasSuffix(string(num), "thgie"):
-					return '8'
-				case strings.HasSuffix(string(num), "enin"):
-					return '9'
+	for _, line := range strings.Split(input, "\n") {
+		digits := make([]int, 0)
+		for i := range line {
+			if line[i] >= '0' && line[i] <= '9' {
+				digit, err := strconv.Atoi(string(line[i]))
+				if err != nil {
+					log.Fatalf("Error parsing input as digit: %v line: %s", err, line)
 				}
+				digits = append(digits, digit)
 				continue
 			}
-			if r < '0' || r > '9' {
-				// reset num
-				num = []rune{}
-				continue
+			if matchNames {
+				for n, name := range names {
+					if strings.HasPrefix(line[i:], name) {
+						digits = append(digits, n+1)
+						break
+					}
+				}
 			}
-			return r
 		}
-		panic("no digit found")
-	}
+		if len(digits) == 0 {
+			log.Fatalf("Error parsing input: no digits found in line: %s", line)
+		}
+		coord := digits[0] * 10
+		coord += digits[len(digits)-1]
 
-	for i, line := range strings.Split(input, "\n") {
-		runes := []rune(line)
-		digits := make([]rune, 0, 2)
-		digits = append(digits, getDigit(runes))
-		digits = append(digits, getDigitReversed(runes))
-		coord, err := strconv.Atoi(string(digits))
-		if err != nil {
-			log.Fatalf("Error parsing input: %v", err)
-		}
-		if i <= 50 {
-			fmt.Println("line:", line, "Coord:", coord)
-		}
 		coords = append(coords, coord)
 	}
 
