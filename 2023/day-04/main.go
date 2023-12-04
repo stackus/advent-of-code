@@ -8,7 +8,6 @@ import (
 	"math"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
 
 	. "github.com/stackus/advent-of-code"
@@ -26,16 +25,8 @@ func puzzle1(input string) int {
 		s := strings.Split(line, ":")
 		numGroups := strings.Split(s[1], " | ")
 		re := regexp.MustCompile(`\d+`)
-		snums := re.FindAllString(numGroups[0], -1)
-		nums := make([]int, len(snums))
-		for i, snum := range snums {
-			nums[i], _ = strconv.Atoi(snum)
-		}
-		swinningNums := re.FindAllString(numGroups[1], -1)
-		winningNums := make([]int, len(swinningNums))
-		for i, swinningNum := range swinningNums {
-			winningNums[i], _ = strconv.Atoi(swinningNum)
-		}
+		nums := re.FindAllString(numGroups[0], -1)
+		winningNums := re.FindAllString(numGroups[1], -1)
 		matches := 0
 		for _, num := range nums {
 			for _, winningNum := range winningNums {
@@ -44,14 +35,10 @@ func puzzle1(input string) int {
 				}
 			}
 		}
-		switch matches {
-		case 0:
+		if matches == 0 {
 			continue
-		case 1:
-			total++
-		default:
-			total += int(math.Pow(2, float64(matches-1)))
 		}
+		total += int(math.Pow(2, float64(matches-1)))
 	}
 
 	return total
@@ -70,16 +57,8 @@ func puzzle2(input string) int {
 		s := strings.Split(line, ":")
 		numGroups := strings.Split(s[1], " | ")
 		re := regexp.MustCompile(`\d+`)
-		snums := re.FindAllString(numGroups[0], -1)
-		nums := make([]int, len(snums))
-		for i, snum := range snums {
-			nums[i], _ = strconv.Atoi(snum)
-		}
-		swinningNums := re.FindAllString(numGroups[1], -1)
-		winningNums := make([]int, len(swinningNums))
-		for i, swinningNum := range swinningNums {
-			winningNums[i], _ = strconv.Atoi(swinningNum)
-		}
+		nums := re.FindAllString(numGroups[0], -1)
+		winningNums := re.FindAllString(numGroups[1], -1)
 		matches := 0
 		for _, num := range nums {
 			for _, winningNum := range winningNums {
