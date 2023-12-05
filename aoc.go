@@ -16,6 +16,13 @@ import (
 func ParseFlags() (int, int) {
 	today := time.Now()
 
+	// use ET timezone
+	loc, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		log.Fatalf("Error loading timezone: %v", err)
+	}
+	today = today.In(loc)
+
 	day := flag.Int("day", today.Day(), "day of the month")
 	year := flag.Int("year", today.Year(), "year")
 	flag.Parse()

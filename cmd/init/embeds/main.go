@@ -68,5 +68,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error writing solution: %v", err)
 	}
-	fmt.Println("Solution: ", solution)
+	fmt.Println("Solution:", solution)
 }
