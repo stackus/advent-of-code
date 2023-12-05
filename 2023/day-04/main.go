@@ -71,6 +71,8 @@ func puzzle2(input string) int {
 				}
 			}
 		}
+
+		total += cards[lineNum]
 	}
 
 	return total
