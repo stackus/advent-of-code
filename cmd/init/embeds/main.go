@@ -7,6 +7,7 @@ import (
 	"log"
 	"path/filepath"
 	"strings"
+	"time"
 
 	. "github.com/stackus/advent-of-code"
 )
@@ -56,12 +57,14 @@ func main() {
 
 	fmt.Println("Running puzzle", puzzle)
 
+	started := time.Now()
 	solution := 0
 	if puzzle == 1 {
 		solution = puzzle1(input)
 	} else {
 		solution = puzzle2(input)
 	}
+	fmt.Println("Completed in", time.Since(started))
 
 	solutionPath := filepath.Join(GetPuzzlePath({{.Day}}, {{.Year}}), fmt.Sprintf("solution-%d.txt", puzzle))
 	err := WriteFile(solutionPath, []byte(fmt.Sprintf("%d", solution)), true)

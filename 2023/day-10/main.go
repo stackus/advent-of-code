@@ -62,7 +62,7 @@ func puzzle2(input string) int {
 		return grid[to.y][to.x] == ' '
 	})
 
-	// Filled in ASCII art!
+	// // Filled in ASCII art!
 	// for y, row := range exploded {
 	// 	for x, char := range row {
 	// 		if char == '*' {

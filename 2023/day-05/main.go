@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	. "github.com/stackus/advent-of-code"
 )
@@ -20,6 +21,7 @@ var input string
 
 // puzzle1 solves the level 1 puzzle
 func puzzle1(input string) int64 {
+	start := time.Now()
 	plan := parseInput(input)
 
 	var lowest int64 = math.MaxInt64
@@ -28,11 +30,13 @@ func puzzle1(input string) int64 {
 		lowest = min(lowest, plan.process(seed))
 	}
 
+	fmt.Println("Time:", time.Since(start))
 	return lowest
 }
 
 // puzzle2 solves the level 2 puzzle
 func puzzle2(input string) int64 {
+	start := time.Now()
 	plan := parseInput(input)
 
 	var lowest int64 = math.MaxInt64
@@ -62,6 +66,7 @@ func puzzle2(input string) int64 {
 		lowest = min(lowest, v)
 	}
 
+	fmt.Println("Time:", time.Since(start))
 	return lowest
 }
 
@@ -77,7 +82,7 @@ type step struct {
 
 func (s *step) process(seed int64) int64 {
 	for _, mapping := range s.maps {
-		if seed >= mapping.src && seed < mapping.src+mapping.rng {
+		if seed >= mapping.src && seed <= mapping.src+mapping.rng {
 			return mapping.dst + (seed - mapping.src)
 		}
 	}
