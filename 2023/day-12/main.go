@@ -64,18 +64,19 @@ var cache = make(map[cacheKey]int)
 func countArrangements(field string, groups []int, fieldIdx, groupIdx, hashLen int) (result int) {
 	// create a cache key
 	key := cacheKey{fieldIdx, groupIdx, hashLen}
-	defer func() {
-		cache[key] = result
-	}()
 	// if we've already calculated the combo of (fieldIdx, groupIdx, hashLen), return the cached value
 	if val, ok := cache[key]; ok {
 		return val
 	}
+	// defer the caching of the result until the end of the function
+	defer func() {
+		cache[key] = result
+	}()
 
 	// we've reached the end of the field
 	if fieldIdx == len(field) {
 		// if we've also reached the end of the groups, we've found an arrangement
-		if len(groups) == groupIdx {
+		if groupIdx == len(groups) {
 			return 1
 		}
 
